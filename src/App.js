@@ -29,7 +29,7 @@ function App() {
           // 200 means no errors
           if (obj.cod === 200) {
             setWeather(obj);
-            console.log(obj.coord);
+            // console.log(obj.coord);
             setLongitude(obj.coord.lon);
             setLatitude(obj.coord.lat);
           } else {
