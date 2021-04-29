@@ -7,6 +7,7 @@ const API_KEY = process.env.REACT_APP_api_key;
 
 function WeatherInfo({ weather, latitude, longitude }) {
   // const [forecast, setForecast] = useState(null);
+
   const [hourlyForecast, setHourlyForecast] = useState([]);
   const [dailyForecast, setDailyForecast] = useState([]);
   const [label, setLabel] = useState(false);
@@ -36,6 +37,7 @@ function WeatherInfo({ weather, latitude, longitude }) {
           // console.log(obj.daily[0]);
           setHourlyForecast(obj.hourly);
           setDailyForecast(obj.daily);
+
           //} else {
           //  setForecast(false);
           //x}
@@ -44,13 +46,47 @@ function WeatherInfo({ weather, latitude, longitude }) {
 
   if (weather === false || weather == null) return <h1>Invalid Zipcode!</h1>;
 
+  const iconLink = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
+
+  //source: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+  function timeConverter(UNIX_timestamp) {
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time =
+      month + " " + date + " " + year + ", " + hour + ":" + min + ":" + sec;
+    return time;
+  }
+  // console.log(timeConverter(weather.dt));
+
   return (
     <div>
       {/* {JSON.stringify(forecast, undefined, 4)} */}
-      <h1>{weather.name}</h1>
-      <h2>{weather.weather[0].description} </h2>
-      <h2>{weather.main.temp} °F</h2>
-
+      <div>
+        <h1>{weather.name}</h1>
+        <img src={iconLink} alt={weather.weather[0].description} />
+        <h3>{weather.weather[0].description} </h3>
+        <h3>{weather.main.temp} °F</h3>
+        <h3>{timeConverter(weather.dt)}</h3>
+      </div>
       <Button variant="contained" onClick={handleButton}>
         Switch Forecast
       </Button>
