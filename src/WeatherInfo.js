@@ -111,6 +111,7 @@ function WeatherInfo({ weather, latitude, longitude }) {
         <div>
           <h3>Daily Forecast</h3>
           <div
+              class="forecast"
             style={{
               display: "grid",
               justifyContent: "center",
